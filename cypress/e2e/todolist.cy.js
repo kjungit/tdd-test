@@ -94,6 +94,7 @@ describe("Todo App e2e테스트", () => {
       .then((attr) => {
         const id = attr.split("-")[2];
 
+        // Todo 삭제합니다.
         deleteTodo(id);
 
         cy.get(`[data-cy^=todo-item-]`).should("have.length", 3); // todo가 추가 되었는지 현재 length를 통해 확인
