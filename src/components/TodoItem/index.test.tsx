@@ -4,7 +4,7 @@ import TodoItem from ".";
 
 describe("TodoItem", () => {
   const mockTodo = {
-    id: 1,
+    id: "1",
     text: "테스트 할 일",
     isEdit: false,
   };
@@ -13,7 +13,7 @@ describe("TodoItem", () => {
   const mockOnClickConfirm = jest.fn();
   const mockOnClickDelete = jest.fn();
 
-  it("renders todo text when not in edit mode", () => {
+  it("todoItem 컴포넌트를 렌더링 합니다.", () => {
     render(
       <TodoItem
         todo={mockTodo}
@@ -26,7 +26,7 @@ describe("TodoItem", () => {
     expect(screen.getByText("테스트 할 일")).toBeInTheDocument();
   });
 
-  it("renders input field when in edit mode", () => {
+  it("todoItem 수정시 편집모드로 input이 나타나게 합니다.", () => {
     const editModeTodo = { ...mockTodo, isEdit: true };
     render(
       <TodoItem
@@ -42,7 +42,7 @@ describe("TodoItem", () => {
     ).toBeInTheDocument();
   });
 
-  it("calls onClickEdit when edit button is clicked", () => {
+  it("TodoItem 수정 버튼 클릭이 동작되는지 확인합니다.", () => {
     render(
       <TodoItem
         todo={mockTodo}
@@ -53,10 +53,10 @@ describe("TodoItem", () => {
     );
 
     fireEvent.click(screen.getByText("수정"));
-    expect(mockOnClickEdit).toHaveBeenCalledWith(1);
+    expect(mockOnClickEdit).toHaveBeenCalledWith("1");
   });
 
-  it("calls onClickDelete when delete button is clicked", () => {
+  it("TodoItem 삭제 버튼 클릭이 동작되는지 확인합니다.", () => {
     render(
       <TodoItem
         todo={mockTodo}
@@ -67,10 +67,10 @@ describe("TodoItem", () => {
     );
 
     fireEvent.click(screen.getByText("삭제"));
-    expect(mockOnClickDelete).toHaveBeenCalledWith(1);
+    expect(mockOnClickDelete).toHaveBeenCalledWith("1");
   });
 
-  it("calls onClickConfirm with updated value when confirm button is clicked in edit mode", () => {
+  it("Todoitem 수정버튼 클릭후 todo 수정 후 확인 버튼을 클릭했을 때 수정이 되는지 확인합니다.", () => {
     const editModeTodo = { ...mockTodo, isEdit: true };
     render(
       <TodoItem
@@ -85,6 +85,6 @@ describe("TodoItem", () => {
     fireEvent.change(input, { target: { value: "수정된 할 일" } });
     fireEvent.click(screen.getByText("확인"));
 
-    expect(mockOnClickConfirm).toHaveBeenCalledWith(1, "수정된 할 일");
+    expect(mockOnClickConfirm).toHaveBeenCalledWith("1", "수정된 할 일");
   });
 });
