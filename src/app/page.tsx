@@ -3,80 +3,39 @@ import TodoItem from "@/components/TodoItem";
 import Button from "@/components/common/Button";
 import Header from "@/components/common/Header";
 import InputField from "@/components/common/InputField";
+import { useTodos } from "@/hooks/useTodos";
 import { useState } from "react";
-let todoData = [
+const todoData = [
   {
-    id: 1,
+    id: "1",
     text: "12313",
     isEdit: false,
   },
   {
-    id: 2,
+    id: "2",
     text: "332313211",
     isEdit: false,
   },
   {
-    id: 3,
+    id: "3",
     text: "21321321",
     isEdit: false,
   },
   {
-    id: 4,
+    id: "4",
     text: "123232131232113",
     isEdit: false,
   },
 ];
 export default function Home() {
   const [todo, setTodo] = useState("");
-  const [todos, setTodos] = useState(todoData);
+  const { todos, addTodo, editTodo, confirmEdit, deleteTodo } =
+    useTodos(todoData);
 
-  const addTodo = () => {
-    if (todo.trim() !== "") {
-      const newTodo = {
-        id: Date.now(), // 간단한 고유 ID 생성
-        text: todo,
-        isEdit: false,
-      };
-      setTodos([...todos, newTodo]);
-      setTodo(""); // 입력 필드 초기화
-    }
-  };
   const handleChange = (value: string) => {
     setTodo(value);
   };
 
-  const onClickEdit = (id: number) => {
-    const neValue = todos.map((item) => {
-      if (item.id === id) {
-        return {
-          ...item,
-          isEdit: !item.isEdit,
-        };
-      }
-
-      return item;
-    });
-    setTodos(neValue);
-  };
-  const onClickConfirm = (id: number, value: string) => {
-    const neValue = todos.map((item) => {
-      if (item.id === id) {
-        return {
-          ...item,
-          text: value,
-          isEdit: !item.isEdit,
-        };
-      }
-
-      return item;
-    });
-    setTodos(neValue);
-  };
-
-  const onClickDelete = (id: number) => {
-    const neValue = todos.filter((item) => item.id !== id);
-    setTodos(neValue);
-  };
   return (
     <main className="flex min-h-screen flex-col items-center  px-24">
       <Header />
@@ -94,7 +53,7 @@ export default function Home() {
           size="sm"
           color="white"
           label="등록"
-          onClick={addTodo}
+          onClick={() => addTodo(todo)}
         />
       </div>
       <div className="w-1/2 mt-20 flex flex-col gap-4">
@@ -102,9 +61,9 @@ export default function Home() {
           <TodoItem
             key={todo.id}
             todo={todo}
-            onClickConfirm={onClickConfirm}
-            onClickDelete={onClickDelete}
-            onClickEdit={onClickEdit}
+            onClickConfirm={confirmEdit}
+            onClickDelete={deleteTodo}
+            onClickEdit={editTodo}
           />
         ))}
       </div>
