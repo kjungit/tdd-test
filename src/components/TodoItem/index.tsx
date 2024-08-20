@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import Button from "../common/Button";
 import InputField from "../common/InputField";
+import { Todo } from "@/hooks/useTodos";
 
 interface TodoItemProps {
-  todo: {
-    id: number;
-    text: string;
-    isEdit: boolean;
-  };
-  onClickEdit: (id: number) => void;
-  onClickConfirm: (id: number, value: string) => void;
-  onClickDelete: (id: number) => void;
+  todo: Todo;
+  onClickEdit: (id: string) => void;
+  onClickConfirm: (id: string, newText: string) => void;
+  onClickDelete: (id: string) => void;
 }
 export default function TodoItem({
   todo,
