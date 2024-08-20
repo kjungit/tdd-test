@@ -5,7 +5,7 @@ interface ButtonProps {
   color?: "white" | "gray";
   label?: string;
   onClick?: () => void;
-  cyId: string;
+  cyId?: string;
 }
 
 export default function Button({
